@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Test: Nutrition Policy</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        .q-card { background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-left: 4px solid #2196f3; }
+        .btn { width: 100%; padding: 15px; background: #2196f3; color: white; border: none; font-size: 16px; cursor: pointer; }
+        .btn:disabled { background: #ccc; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 10px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="quiz-ui">
+    <h2>📋 Pre-Test: Nutrition</h2>
+    <form id="preForm">
+        <label>Name</label><input type="text" name="Name" required>
+        <label>Roll No</label><input type="number" name="Roll Number" required>
+        <div id="questions"></div>
+        <button class="btn" id="subBtn">Submit Pre-Test</button>
+    </form>
+</div>
+
+<div class="container" id="success-ui" style="display:none; text-align:center;">
+    <h1 style="color:green;">✅ Recorded</h1>
+    <p>Your responses have been saved.</p>
+    <p>Please pay attention to the lecture.</p>
+</div>
+
+<script>
+    // *** PASTE URL HERE ***
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwD4Oejw8pSvBVmzoAnqiOs_Ylnw-LcvZ2CliUwtB_ItYYFahW4yi1S0PgpEv6nBNyU/exec';
+    const targetTab = 'PreTest'; // Sends data to PreTest tab
+
+    const questions = [
+        { q: "1. National Nutrition Policy year?", opts: ["1975", "1993", "2000", "2013"], a: "1993" },
+        { q: "2. NOT an ICDS service?", opts: ["Supp. Nutrition", "Pre-school Edu", "Cash for Delivery", "Immunization"], a: "Cash for Delivery" },
+        { q: "3. Mid-Day Meal calories (Primary)?", opts: ["300", "450", "700", "800"], a: "450 Kcal" },
+        { q: "4. 6x6x6 strategy program?", opts: ["Iodine Control", "Anemia Mukt Bharat", "Vit A Prophylaxis", "RBSK"], a: "Anemia Mukt Bharat (AMB)" },
+        { q: "5. ICDS Village worker?", opts: ["ASHA", "ANM", "Anganwadi Worker", "VHG"], a: "Anganwadi Worker (AWW)" },
+        { q: "6. AMB Pregnancy Prophylaxis?", opts: ["45mg Iron", "60mg Iron + 500mcg FA", "100mg Iron", "20mg Iron"], a: "60 mg Iron + 500 mcg Folic Acid" },
+        { q: "7. Poshan Maah Month?", opts: ["Jan", "April", "September", "Nov"], a: "September" },
+        { q: "8. ICDS Nodal Ministry?", opts: ["Health", "Women & Child Dev", "Education", "Rural Dev"], a: "Ministry of Women and Child Development (MWCD)" },
+        { q: "9. NOT a Direct Intervention?", opts: ["Fortification", "PDS Expansion", "Micronutrient Control", "Land Reforms"], a: "Land Reforms" },
+        { q: "10. Orange zone in Growth Chart?", opts: ["Normal", "Moderately Underweight", "Severely Underweight", "Overweight"], a: "Moderately Underweight" }
+    ];
+
+    const qDiv = document.getElementById('questions');
+    questions.forEach((q, i) => {
+        qDiv.innerHTML += `<div class="q-card"><b>${q.q}</b><br>${q.opts.map(o => `<label style="display:block;margin-top:5px;"><input type="radio" name="q${i}" value="${o}" required> ${o}</label>`).join('')}</div>`;
+    });
+
+    document.getElementById('preForm').addEventListener('submit', e => {
+        e.preventDefault();
+        document.getElementById('subBtn').innerText = "Submitting...";
+        
+        let score = 0;
+        let ansStr = "";
+        const fd = new FormData(document.getElementById('preForm'));
+        
+        questions.forEach((q, i) => {
+            let userAns = fd.get(`q${i}`);
+            if(userAns === q.a) score++;
+            ansStr += `${i+1}:${userAns} | `;
+        });
+
+        fd.append("Score", score);
+        fd.append("Answers", ansStr);
+        fd.append("sheetName", targetTab); // CRITICAL: Tells script which tab
+
+        fetch(scriptURL, { method: 'POST', body: fd })
+            .then(() => {
+                document.getElementById('quiz-ui').style.display = 'none';
+                document.getElementById('success-ui').style.display = 'block';
+            })
+            .catch(err => alert("Error submitting. Check connection."));
+    });
+</script>
+</body>
+</html>
