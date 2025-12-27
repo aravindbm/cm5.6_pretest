@@ -38,18 +38,68 @@
     const targetTab = 'PreTest'; // Sends data to PreTest tab
 
     const questions = [
-        { q: "1. National Nutrition Policy year?", opts: ["1975", "1993", "2000", "2013"], a: "1993" },
-        { q: "2. NOT an ICDS service?", opts: ["Supp. Nutrition", "Pre-school Edu", "Cash for Delivery", "Immunization"], a: "Cash for Delivery" },
-        { q: "3. Mid-Day Meal calories (Primary)?", opts: ["300", "450", "700", "800"], a: "450 Kcal" },
-        { q: "4. 6x6x6 strategy program?", opts: ["Iodine Control", "Anemia Mukt Bharat", "Vit A Prophylaxis", "RBSK"], a: "Anemia Mukt Bharat (AMB)" },
-        { q: "5. ICDS Village worker?", opts: ["ASHA", "ANM", "Anganwadi Worker", "VHG"], a: "Anganwadi Worker (AWW)" },
-        { q: "6. AMB Pregnancy Prophylaxis?", opts: ["45mg Iron", "60mg Iron + 500mcg FA", "100mg Iron", "20mg Iron"], a: "60 mg Iron + 500 mcg Folic Acid" },
-        { q: "7. Poshan Maah Month?", opts: ["Jan", "April", "September", "Nov"], a: "September" },
-        { q: "8. ICDS Nodal Ministry?", opts: ["Health", "Women & Child Dev", "Education", "Rural Dev"], a: "Ministry of Women and Child Development (MWCD)" },
-        { q: "9. NOT a Direct Intervention?", opts: ["Fortification", "PDS Expansion", "Micronutrient Control", "Land Reforms"], a: "Land Reforms" },
-        { q: "10. Orange zone in Growth Chart?", opts: ["Normal", "Moderately Underweight", "Severely Underweight", "Overweight"], a: "Moderately Underweight" }
+        { 
+            q: "1. The National Nutrition Policy was adopted by the Govt of India in which year?", 
+            opts: ["1975", "1993", "2000", "2013"], 
+            a: "1993",
+            exp: "The policy was adopted in 1993 under the aegis of the Dept of Women and Child Development to tackle malnutrition via direct and indirect interventions."
+        },
+        { 
+            q: "2. Which is NOT one of the six services provided under the ICDS scheme?", 
+            opts: ["Supplementary Nutrition", "Non-formal Pre-school Education", "Cash Transfer for Hospital Delivery", "Immunization"], 
+            a: "Cash Transfer for Hospital Delivery",
+            exp: "Cash transfers for delivery fall under schemes like JSY or PMMVY. ICDS services are Immunization, Supp. Nutrition, Health Checkup, Referral, Pre-school, and Health Ed."
+        },
+        { 
+            q: "3. Under PM POSHAN (Mid-Day Meal), a primary school child (Class 1-5) is entitled to:", 
+            opts: ["300 Kcal", "450 Kcal", "700 Kcal", "800 Kcal"], 
+            a: "450 Kcal",
+            exp: "Norms: Primary (Class 1-5) gets 450 Kcal & 12g Protein. Upper Primary (Class 6-8) gets 700 Kcal & 20g Protein."
+        },
+        { 
+            q: "4. The '6x6x6' strategy is the hallmark of which program?", 
+            opts: ["National Iodine Deficiency Control", "Anemia Mukt Bharat (AMB)", "Vitamin A Prophylaxis", "Bal Swasthya Karyakram"], 
+            a: "Anemia Mukt Bharat (AMB)",
+            exp: "AMB uses the 6x6x6 strategy: 6 Beneficiaries, 6 Interventions, and 6 Institutional Mechanisms."
+        },
+        { 
+            q: "5. Under ICDS, who is the principal worker at the village level?", 
+            opts: ["ASHA", "ANM", "Anganwadi Worker (AWW)", "Village Health Guide"], 
+            a: "Anganwadi Worker (AWW)",
+            exp: "The Anganwadi Worker (AWW) is the community-based frontline worker for ICDS. The ASHA works primarily under NHM."
+        },
+        { 
+            q: "6. What is the prophylactic Iron & Folic Acid dose for pregnant women under AMB?", 
+            opts: ["45 mg Iron + 400 mcg Folic Acid", "60 mg Iron + 500 mcg Folic Acid", "100 mg Iron + 500 mcg Folic Acid", "20 mg Iron + 100 mcg Folic Acid"], 
+            a: "60 mg Iron + 500 mcg Folic Acid",
+            exp: "For prophylaxis in pregnancy: Daily 60mg Elemental Iron + 500mcg Folic Acid. (Note: 100mg was the old dose; it is now 60mg under AMB)."
+        },
+        { 
+            q: "7. 'Poshan Maah' (Nutrition Month) is celebrated annually in which month?", 
+            opts: ["January", "April", "September", "November"], 
+            a: "September",
+            exp: "September is celebrated as Rashtriya Poshan Maah to mobilize community participation for nutrition."
+        },
+        { 
+            q: "8. Which ministry is the nodal agency for the implementation of ICDS?", 
+            opts: ["MoHFW", "Ministry of Women and Child Dev (MWCD)", "Ministry of Education", "Ministry of Rural Dev"], 
+            a: "Ministry of Women and Child Dev (MWCD)",
+            exp: "While Health (Immunization) is supported by MoHFW, the administrative control and funding of ICDS lies with MWCD."
+        },
+        { 
+            q: "9. In National Nutrition Policy, 'Direct Interventions' include all EXCEPT:", 
+            opts: ["Fortification of essential foods", "Expanding PDS", "Control of Micronutrient deficiencies", "Land Reforms"], 
+            a: "Land Reforms",
+            exp: "Land reforms, literacy, and food security are classified as 'Indirect Policy Instruments' dealing with long-term structural changes."
+        },
+        { 
+            q: "10. A child in an Anganwadi is plotted in the 'Orange' zone of the growth chart. What does this indicate?", 
+            opts: ["Normal nutritional status", "Moderately Underweight", "Severely Underweight", "Overweight"], 
+            a: "Moderately Underweight",
+            exp: "On the growth chart used in this context: Green is Normal, Yellow/Orange typically denotes Underweight categories requiring attention (Moderate/Severe)."
+        }
     ];
-
+    
     const qDiv = document.getElementById('questions');
     questions.forEach((q, i) => {
         qDiv.innerHTML += `<div class="q-card"><b>${q.q}</b><br>${q.opts.map(o => `<label style="display:block;margin-top:5px;"><input type="radio" name="q${i}" value="${o}" required> ${o}</label>`).join('')}</div>`;
@@ -84,3 +134,4 @@
 </body>
 
 </html>
+
